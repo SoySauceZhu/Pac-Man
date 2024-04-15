@@ -72,7 +72,7 @@ set CLASSPATH=%APP_HOME%\lib\pacMan-1.0-SNAPSHOT.jar;%APP_HOME%\lib\stdlib-packa
 
 
 @rem Execute pacMan
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %PAC_MAN_OPTS%  -classpath "%CLASSPATH%" byog.Core.Test %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %PAC_MAN_OPTS%  -classpath "%CLASSPATH%" byog.Core.Main %*
 
 :end
 @rem End local scope for the variables with windows NT shell

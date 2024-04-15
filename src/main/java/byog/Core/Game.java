@@ -2,6 +2,7 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import byog.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
@@ -81,6 +82,7 @@ public class Game {
 
     private void playInMap(Map map, char mode) {
         while (true) {
+            drawHUD(map.getFloorTiles());
             char key = solicitKey();
 
             if (key == ':') {
@@ -100,14 +102,73 @@ public class Game {
                 }
 
             } else {
-                if (mode == 'N') {
+                if (mode == 'N') {      // ninja mode
                     map.ninjaControl(key);
-                } else {
+                } else {                // normal mode
                     map.control(key);
                 }
                 TETile[][] tiles = map.getFloorTiles();
                 ter.renderFrame(tiles);
             }
+        }
+    }
+
+    private void drawHUD(TETile[][] tiles) {
+        TETile preTile = Tileset.NOTHING;
+
+        while (!StdDraw.hasNextKeyTyped()) {
+            int mx = (int) StdDraw.mouseX();
+            int my = (int) StdDraw.mouseY();
+            if (mx > WIDTH || my > HEIGHT) {
+                continue;
+            }
+            if (preTile.equals(tiles[mx][my])) {
+                continue;
+            }
+            if (tiles[mx][my].equals(Tileset.LOCKED_DOOR)) {
+                ter.renderFrame(tiles);
+                StdDraw.enableDoubleBuffering();
+                StdDraw.setPenColor(Color.white);
+                preTile = Tileset.LOCKED_DOOR;
+                StdDraw.textLeft(1, HEIGHT - 1, "Locked Door");
+            } else if (tiles[mx][my].equals(Tileset.WALL)) {
+                ter.renderFrame(tiles);
+                StdDraw.enableDoubleBuffering();
+                StdDraw.setPenColor(Color.white);
+                preTile = Tileset.WALL;
+                StdDraw.textLeft(1, HEIGHT - 1, "Wall");
+            } else if (tiles[mx][my].equals(Tileset.COIN)) {
+                ter.renderFrame(tiles);
+                StdDraw.enableDoubleBuffering();
+                StdDraw.setPenColor(Color.white);
+                preTile = Tileset.COIN;
+                StdDraw.textLeft(1, HEIGHT - 1, "Coin");
+            } else if (tiles[mx][my].equals(Tileset.PLAYER)) {
+                ter.renderFrame(tiles);
+                StdDraw.enableDoubleBuffering();
+                StdDraw.setPenColor(Color.white);
+                preTile = Tileset.PLAYER;
+                StdDraw.textLeft(1, HEIGHT - 1, "You, the player!");
+            } else if (tiles[mx][my].equals(Tileset.GRASS)) {
+                ter.renderFrame(tiles);
+                StdDraw.enableDoubleBuffering();
+                StdDraw.setPenColor(Color.white);
+                preTile = Tileset.GRASS;
+                StdDraw.textLeft(1, HEIGHT - 1, "Grass");
+            } else if (tiles[mx][my].equals(Tileset.FLOOR)) {
+                ter.renderFrame(tiles);
+                StdDraw.enableDoubleBuffering();
+                StdDraw.setPenColor(Color.white);
+                preTile = Tileset.FLOOR;
+                StdDraw.textLeft(1, HEIGHT - 1, "Floor");
+            } else {
+                ter.renderFrame(tiles);
+                StdDraw.enableDoubleBuffering();
+                StdDraw.setPenColor(Color.white);
+                preTile = Tileset.NOTHING;
+                StdDraw.textLeft(1, HEIGHT - 1, "Nothing");
+            }
+            StdDraw.show();
         }
     }
 

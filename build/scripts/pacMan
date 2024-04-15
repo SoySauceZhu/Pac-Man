@@ -210,7 +210,7 @@ DEFAULT_JVM_OPTS=""
 
 set -- \
         -classpath "$CLASSPATH" \
-        byog.Core.Test \
+        byog.Core.Main \
         "$@"
 
 # Stop when "xargs" is not available.
